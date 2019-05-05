@@ -2,19 +2,19 @@
 apiVersion: flux.weave.works/v1beta1
 kind: HelmRelease
 metadata:
-  name: helloworlds-dev
+  name: helloworld-dev
   namespace: dev
   annotations:
     flux.weave.works/automated: "true"
     flux.weave.works/tag.chart-image: glob:*
 spec:
-  releaseName: helloworlds-dev
+  releaseName: helloworld-dev
   chart:
     git: git@github.com:tsd1668/gitops-helm
     path: charts/helloworld
     ref: master
   values:
-    image: tsd1668/helloworld:7
+    image: tsd1668/hello_world:7
     replicaCount: 1
     hpa:
       enabled: false

@@ -14,7 +14,7 @@ spec:
     path: charts/podinfo
     ref: master
   values:
-    image: tsd1668/podinfo:dev-vpl8wylg
+    image: tsd1668/podinfo:dev-iq9h5kbp
     replicaCount: 1
     hpa:
       enabled: false

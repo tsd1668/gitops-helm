@@ -1,29 +1,33 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  annotations:
-    kompose.cmd: kompose convert
-    kompose.version: 1.16.0 (0c01309)
-  creationTimestamp: null
+  name: {{ .Release.Name }}
   labels:
-    io.kompose.service: web
-  name: web
+    app: {{ template "helloworld.name" . }}
+    chart: {{ template "helloworld.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
 spec:
-  replicas: 1
-  strategy:
-    type: Recreate
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ template "helloworld.name" . }}
+      release: {{ .Release.Name }}
   template:
     metadata:
-      creationTimestamp: null
       labels:
-        io.kompose.service: web
+        app: {{ template "helloworld.name" . }}
+        release: {{ .Release.Name }}
+      annotations:
+        prometheus.io/scrape: 'true'
     spec:
       containers:
-      - image: tsd1668/hello_world:latest
-        name: web
-        ports:
-        - containerPort: 8080
-        resources: {}
-        workingDir: /usr/src/app
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image }}"
+          imagePullPolicy: {{ .Values.imagePullPolicy }}
+          ports:
+          - name: http
+            containerPort: {{ .Values.service.containerPort }}
+            protocol: TCP
       restartPolicy: Always
 status: {}

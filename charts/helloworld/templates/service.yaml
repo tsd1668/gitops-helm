@@ -1,20 +1,22 @@
 apiVersion: v1
 kind: Service
 metadata:
-  annotations:
-    kompose.cmd: kompose convert
-    kompose.version: 1.16.0 (0c01309)
-  creationTimestamp: null
+  name: {{ .Release.Name }}
   labels:
-    io.kompose.service: web
-  name: web
+    app: {{ template "helloworld.name" . }}
+    chart: {{ template "helloworld.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
 spec:
-  type: LoadBalancer
+  type: {{ .Values.service.type }}
   ports:
-  - name: "8000"
-    port: 8000
-    targetPort: 8080
+    - port: {{ .Values.service.externalPort }}
+      targetPort: http
+      protocol: TCP
+      name: http
+      {{- if (and (eq .Values.service.type "NodePort") (not (empty .Values.service.nodePort))) }}
+      nodePort: {{ .Values.service.nodePort }}
+      {{- end }}
   selector:
-    io.kompose.service: web
-status:
-  loadBalancer: {}
+    app: {{ template "helloworld.name" . }}
+    release: {{ .Release.Name }}

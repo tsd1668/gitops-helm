@@ -6,7 +6,7 @@ image: tsd1668/hello_world:7
 imagePullPolicy: IfNotPresent
 
 service:
-  type: ClusterIP
+  type: LoadBalancer
   externalPort: 8000
   containerPort: 8080
   nodePort: 31198

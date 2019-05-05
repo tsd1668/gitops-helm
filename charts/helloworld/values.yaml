@@ -7,8 +7,8 @@ imagePullPolicy: IfNotPresent
 
 service:
   type: ClusterIP
-  externalPort: 9898
-  containerPort: 9898
+  externalPort: 8000
+  containerPort: 8080
   nodePort: 31198
 
 # Heapster or metrics-server add-on required

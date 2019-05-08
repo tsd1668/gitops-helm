@@ -14,7 +14,7 @@ spec:
     path: charts/helloworld
     ref: master
   values:
-    image: tsd1668/hello_world:8
+    image: tsd1668/hello_world:9
     replicaCount: 1
     hpa:
       enabled: false
